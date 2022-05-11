@@ -197,6 +197,13 @@ public class EventHandler implements RequestHandler<ScheduledEvent, String> {
         return modelAndView;
     }
     
+    public void processResponseNoncompliant(Map<String, String> response) {
+    // Noncompliant: logs sensitive data without redaction resulting in a possible sensitive information leak.
+    final String name = response.get("Name");
+    String redacted = RedactionUtil.redact(name);
+    log.info(name);
+}
+    
 }
 
 
